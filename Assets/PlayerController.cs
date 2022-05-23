@@ -6,20 +6,19 @@ public class PlayerController : MonoBehaviour
 {
     public float moveSpeed = 5;
     public float runSpeedMultiplier = 2;
-    private float moveSpeedOG = 5f;
+    float moveSpeedOG = 5f;
     public Rigidbody2D RigidBody;
     Vector2 curMovement;
-    private bool isJumpHeld;
-    private bool isJumpDepressed;
+    bool isJumpHeld;
+    bool isJumpDepressed;
     public float runHeldTimer = 2;
-    private float runHeldTimerOG = 2;
+    float runHeldTimerOG = 2;
     public bool isRunning = false;
-    public bool canDash = true;
     public bool isDashing = false;
     public float dashSpeedMult = 10;
     public float dashSpeedTime = 0.1f;
-    public float dashSpeedTimeOG = 0.1f;
-    private Vector2 movementStored;
+    float dashSpeedTimeOG = 0.1f;
+    Vector2 movementStored;
 
     // Update is called once per frame
 
@@ -27,7 +26,6 @@ public class PlayerController : MonoBehaviour
     {
         moveSpeedOG = moveSpeed;
         runHeldTimerOG = runHeldTimer;
-        canDash = true;
         dashSpeedTimeOG = dashSpeedTime;
     }
     void Update()
@@ -44,7 +42,7 @@ public class PlayerController : MonoBehaviour
         isJumpHeld = Input.GetButton("Jump");
         isJumpDepressed = Input.GetButtonUp("Jump");
         //Dash
-        if (canDash == true && isJumpDepressed == true)
+        if (isRunning == false && isJumpDepressed == true)
         {
             isDashing = true;
             movementStored = curMovement;
@@ -81,7 +79,6 @@ public class PlayerController : MonoBehaviour
             {
                 isRunning = true;
                 moveSpeed *= runSpeedMultiplier;
-                canDash = false;
                 runHeldTimer = runHeldTimerOG;
                 if (moveSpeed > moveSpeedOG * runSpeedMultiplier)
                 {
@@ -94,16 +91,19 @@ public class PlayerController : MonoBehaviour
         {
             moveSpeed = moveSpeedOG;
             runHeldTimer = runHeldTimerOG;
-            canDash = true;
             isRunning = false;
         }
 
     }
+
+    public float accelerationSpeed;
+    public float deccelerationSpeed;
+    private Vector2 curRbMovement;
     void FixedUpdate()
     {
-
-        RigidBody.MovePosition(RigidBody.position + curMovement * moveSpeed * Time.fixedDeltaTime);
-
-
+        curRbMovement.x = RigidBody.velocity.x;
+        curRbMovement.y = RigidBody.velocity.y;
+        RigidBody.AddForce(curMovement * moveSpeed * accelerationSpeed);
+        RigidBody.AddForce(-curRbMovement * deccelerationSpeed);
     }
 }

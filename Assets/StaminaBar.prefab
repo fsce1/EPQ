@@ -44,6 +44,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9cb884357b34034fb65b4fece4ba39c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  scalingObject: {fileID: 7125011020581956125}
+  minObjScale: 0
+  maxObjScale: 5
+  curStamina: 1
+  StaminaMax: 1
+  regenRate: 0.001
+  runDrainRate: 0.004
+  dashDrainRate: 0.004
 --- !u!1 &7597890184003351801
 GameObject:
   m_ObjectHideFlags: 0
