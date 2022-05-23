@@ -35,6 +35,8 @@ public class StaminaBar : MonoBehaviour
             tintingObject.color = lockedColour;
 
         }
+
+
         curScaleLerp = maxObjScale * curStamina;
         scalingObject.localScale = new Vector2(curScaleLerp, scalingObject.localScale.y);
     }
@@ -43,13 +45,15 @@ public class StaminaBar : MonoBehaviour
     void FixedUpdate()
     {
 
-        if (player.isRunning == false && player.isDashing == false) {
+        if (player.isRunning == false && player.isDashing == false)
+        {
             curStamina = curStamina + regenRate;
         }
-        else if (player.isRunning == true){
+        else if (player.isRunning == true && (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0))
+        {
             curStamina = curStamina - runDrainRate;
         }
-        else if (player.isDashing == true)
+        else if (player.isDashing == true && (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0))
         {
             curStamina = curStamina - dashDrainRate;
         }

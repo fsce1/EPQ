@@ -43,7 +43,7 @@ public class PlayerController : MonoBehaviour
         isJumpHeld = Input.GetButton("Jump");
         isJumpDepressed = Input.GetButtonUp("Jump");
         //Dash
-        if (isRunning == false && isJumpDepressed == true && canRunOrDash == true)
+        if (isRunning == false && isJumpDepressed == true && canRunOrDash == true && (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0))
         {
             isDashing = true;
             movementStored = curMovement;
@@ -76,7 +76,7 @@ public class PlayerController : MonoBehaviour
             {
                 runHeldTimer -= Time.deltaTime;
             }
-            else
+            else if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
             {
                 isRunning = true;
                 moveSpeed *= runSpeedMultiplier;
@@ -85,6 +85,10 @@ public class PlayerController : MonoBehaviour
                 {
                     moveSpeed = moveSpeedOG * runSpeedMultiplier;
                 }
+            }
+            else
+            {
+                isRunning = false;
             }
         }
        
@@ -97,14 +101,13 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    public float accelerationSpeed;
-    public float deccelerationSpeed;
+    public float frictionAmount;
     private Vector2 curRbMovement;
     void FixedUpdate()
     {
         curRbMovement.x = RigidBody.velocity.x;
         curRbMovement.y = RigidBody.velocity.y;
-        RigidBody.AddForce(curMovement * moveSpeed * accelerationSpeed);
-        RigidBody.AddForce(-curRbMovement * deccelerationSpeed);
+        RigidBody.AddForce(curMovement * moveSpeed * frictionAmount);
+        RigidBody.AddForce(-curRbMovement * frictionAmount);
     }
 }
