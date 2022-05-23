@@ -6,26 +6,41 @@ public class StaminaBar : MonoBehaviour
 {
     public PlayerController player;
     [Header("Scale Settings")]
-    public Object scalingObject;
-    public float minObjScale = 0;
+    public Transform scalingObject;
     public float maxObjScale = 5;
+    public float curScaleLerp = 1;
+    public SpriteRenderer tintingObject;
+    public Color maxColour;
+    public Color lockedColour;
     [Header("Stamina Settings")]
     public float curStamina = 1;
-    public float StaminaMax = 1;
+    public float staminaMax = 1;
     public float regenRate = 1;
     public float runDrainRate = 1;
     public float dashDrainRate = 1;
 
     // Start is called before the first frame update
-    void Start()
+    void Update()
     {
-        if (player.isRunning == true) {
+        if (curStamina > staminaMax)
+        {
+            curStamina = staminaMax;
+            player.canRunOrDash = true;
+            tintingObject.color = maxColour;
+        }
+        if (curStamina <= 0)
+        {
+            curStamina = 0;
+            player.canRunOrDash = false;
+            tintingObject.color = lockedColour;
 
         }
+        curScaleLerp = maxObjScale * curStamina;
+        scalingObject.localScale = new Vector2(curScaleLerp, scalingObject.localScale.y);
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
 
         if (player.isRunning == false && player.isDashing == false) {
@@ -37,10 +52,6 @@ public class StaminaBar : MonoBehaviour
         else if (player.isDashing == true)
         {
             curStamina = curStamina - dashDrainRate;
-        }
-        if (curStamina > 1)
-        {
-            curStamina = 1;
         }
     }
 }

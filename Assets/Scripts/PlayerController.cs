@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     public float runHeldTimer = 2;
     float runHeldTimerOG = 2;
     public bool isRunning = false;
+    public bool canRunOrDash = true;
     public bool isDashing = false;
     public float dashSpeedMult = 10;
     public float dashSpeedTime = 0.1f;
@@ -42,7 +43,7 @@ public class PlayerController : MonoBehaviour
         isJumpHeld = Input.GetButton("Jump");
         isJumpDepressed = Input.GetButtonUp("Jump");
         //Dash
-        if (isRunning == false && isJumpDepressed == true)
+        if (isRunning == false && isJumpDepressed == true && canRunOrDash == true)
         {
             isDashing = true;
             movementStored = curMovement;
@@ -69,7 +70,7 @@ public class PlayerController : MonoBehaviour
 
         }
         //Run
-        if (isJumpHeld == true)
+        if (isJumpHeld == true && canRunOrDash == true)
         {
             if(runHeldTimer > 0)
             {
@@ -87,7 +88,7 @@ public class PlayerController : MonoBehaviour
             }
         }
        
-        if (isJumpDepressed == true)
+        if (isJumpDepressed == true|| canRunOrDash == false)
         {
             moveSpeed = moveSpeedOG;
             runHeldTimer = runHeldTimerOG;

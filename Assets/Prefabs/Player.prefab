@@ -46,9 +46,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 3
-  runSpeedMultiplier: 3
+  runSpeedMultiplier: 2
   RigidBody: {fileID: 1201742487916742589}
   runHeldTimer: 0.2
+  isRunning: 0
+  canRunOrDash: 1
+  isDashing: 0
   dashSpeedMult: 5
   dashSpeedTime: 0.1
   accelerationSpeed: 10
