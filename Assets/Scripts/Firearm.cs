@@ -59,6 +59,7 @@ public class Firearm : MonoBehaviour
             {
                 isReloading = false;
                 canFire = true;
+                reloadTimer = reloadTimerOG;
             }
             canFire = false;
             reloadTimer -= Time.deltaTime;
