@@ -17,25 +17,28 @@ public class Firearm : MonoBehaviour
     public float reloadTimer;
     public float reloadTimerOG;
     public bool canFire = true;
-    public bool isReloading;
+    Func<bool> reloadFuncPointer;
+    bool blank() => true;
 
     void Start()
     {
         reloadTimerOG = reloadTimer;
+        reloadFuncPointer = blank;
     }
     void Update()
     {
         transform.up = Crosshair.position - transform.position;
         RigidBody.MovePosition(Player.transform.position);
 
-        if (currentMagAmount >= magCapacity)
-        {
-            currentMagAmount = magCapacity;
-            isReloading = false;
-        }
+        //if (currentMagAmount >= magCapacity)
+        //{
+        //    currentMagAmount = magCapacity;
+        //    IsReloading = false;
+        //}
 
         if (currentMagAmount < 1)
         {
+            reloadFuncPointer = DoReload;
             canFire = false;
         }
         else
@@ -45,10 +48,22 @@ public class Firearm : MonoBehaviour
 
         if (Input.GetButtonDown("Reload"))
         {
-            isReloading = true;
+            //DoReload();
+            reloadFuncPointer = DoReload;
         }
 
-        if (isReloading == true)
+        reloadFuncPointer();
+
+        if (Input.GetMouseButtonDown(0) && canFire)
+        {
+            Instantiate(objToDuplicate, muzzlePoint.position, this.transform.rotation);
+            currentMagAmount -= 1;
+        }
+    }
+
+    private bool DoReload()
+    {
+        if (currentMagAmount < magCapacity)
         {
             if (reloadTimer < 0)
             {
@@ -57,20 +72,14 @@ public class Firearm : MonoBehaviour
             }
             if (Input.GetMouseButtonDown(0))
             {
-                isReloading = false;
                 canFire = true;
                 reloadTimer = reloadTimerOG;
             }
             canFire = false;
             reloadTimer -= Time.deltaTime;
-
-
+            return true;
         }
-
-        if (Input.GetMouseButtonDown(0) && canFire == true)
-        {
-            Instantiate(objToDuplicate, muzzlePoint.position, this.transform.rotation);
-            currentMagAmount -= 1;
-        }
+        reloadFuncPointer = blank;
+        return false;
     }
 }

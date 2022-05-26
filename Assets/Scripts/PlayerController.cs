@@ -20,11 +20,16 @@ public class PlayerController : MonoBehaviour
     public float dashSpeedTime = 0.1f;
     float dashSpeedTimeOG = 0.1f;
     Vector2 movementStored;
+    public float frictionAmount;
+    public float frictionAmountDashing;
+    private float frictionAmountOG;
+    private Vector2 curRbMovement;
 
     // Update is called once per frame
 
     void Start()
     {
+        frictionAmountOG = frictionAmount;
         moveSpeedOG = moveSpeed;
         runHeldTimerOG = runHeldTimer;
         dashSpeedTimeOG = dashSpeedTime;
@@ -34,11 +39,15 @@ public class PlayerController : MonoBehaviour
         if (isDashing == true)
         {
             curMovement = movementStored;
+            frictionAmount = frictionAmountDashing;
+
         }
         else
         {
             curMovement.x = Input.GetAxisRaw("Horizontal");
             curMovement.y = Input.GetAxisRaw("Vertical");
+            frictionAmount = frictionAmountOG;
+
         }
         isJumpHeld = Input.GetButton("Jump");
         isJumpDepressed = Input.GetButtonUp("Jump");
@@ -101,8 +110,7 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    public float frictionAmount;
-    private Vector2 curRbMovement;
+
     void FixedUpdate()
     {
         curRbMovement.x = RigidBody.velocity.x;
