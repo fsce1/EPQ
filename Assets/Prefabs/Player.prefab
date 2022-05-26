@@ -54,9 +54,8 @@ MonoBehaviour:
   muzzlePoint: {fileID: 3045534004644087771}
   currentMagAmount: 6
   magCapacity: 6
-  canTopUp: 0
-  reloadTimer: 1
-  reloadTimerOG: 176
+  reloadTimer: 0.75
+  reloadTimerOG: 0
   canFire: 1
   isReloading: 0
 --- !u!50 &8329023081135346124
