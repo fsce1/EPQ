@@ -357,10 +357,6 @@ PrefabInstance:
       propertyPath: Crosshair
       value: 
       objectReference: {fileID: 714209866}
-    - target: {fileID: 3229706223888497959, guid: 2c86b849637c63a46855c8f76db83bca, type: 3}
-      propertyPath: Crosshair
-      value: 
-      objectReference: {fileID: 714209866}
     - target: {fileID: 5009455804878138729, guid: 2c86b849637c63a46855c8f76db83bca, type: 3}
       propertyPath: m_Name
       value: Player

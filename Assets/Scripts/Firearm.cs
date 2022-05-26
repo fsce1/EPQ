@@ -9,6 +9,7 @@ public class Firearm : MonoBehaviour
     public Rigidbody2D RigidBody;
     [Header("Firing Settings")]
     public GameObject objToDuplicate;
+    public Transform muzzlePoint;
     void Start()
     {
         
@@ -17,9 +18,10 @@ public class Firearm : MonoBehaviour
     {
         transform.up = Crosshair.position - transform.position;
         RigidBody.MovePosition(Player.transform.position);
-    }
 
-    private void OnMouseDown()
-    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            Instantiate(objToDuplicate, muzzlePoint.position, this.transform.rotation);
+        }
     }
 }

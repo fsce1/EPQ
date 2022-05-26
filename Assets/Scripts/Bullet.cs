@@ -4,11 +4,16 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    public Transform Crosshair;
+    public Rigidbody2D RigidBody;
+    public float bulletInitialSpeed;
     void Start()
     {
-        transform.up = Crosshair.position - transform.position;
+        RigidBody.AddRelativeForce(new Vector2(0, bulletInitialSpeed));
 
+    }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        Object.Destroy(this);
     }
     void Update()
     {
