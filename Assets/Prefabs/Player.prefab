@@ -52,6 +52,13 @@ MonoBehaviour:
   RigidBody: {fileID: 8329023081135346124}
   objToDuplicate: {fileID: 3636099899844483853, guid: bfb407fbaf6f45c41bc20e353b23bf50, type: 3}
   muzzlePoint: {fileID: 3045534004644087771}
+  currentMagAmount: 6
+  magCapacity: 6
+  canTopUp: 0
+  reloadTimer: 1
+  reloadTimerOG: 176
+  canFire: 1
+  isReloading: 0
 --- !u!50 &8329023081135346124
 Rigidbody2D:
   serializedVersion: 4
