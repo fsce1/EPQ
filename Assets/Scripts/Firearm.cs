@@ -18,6 +18,22 @@ public class Firearm : MonoBehaviour
     public float reloadTimerOG;
     public bool canFire = true;
     public bool isReloading;
+    bool isColliding = false;
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        isColliding = true;
+        if (collision.gameObject.tag == "Obstacle")
+        {
+            canFire = false;
+
+        }
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        isColliding = false;
+        canFire = true;
+    }
 
     void Start()
     {
@@ -37,8 +53,9 @@ public class Firearm : MonoBehaviour
         if (currentMagAmount < 1)
         {
             canFire = false;
+            isReloading = true;
         }
-        else
+        else if(isColliding == false)
         {
             canFire = true;
         }
@@ -63,10 +80,7 @@ public class Firearm : MonoBehaviour
             }
             canFire = false;
             reloadTimer -= Time.deltaTime;
-
-
         }
-
         if (Input.GetMouseButtonDown(0) && canFire == true)
         {
             Instantiate(objToDuplicate, muzzlePoint.position, this.transform.rotation);
