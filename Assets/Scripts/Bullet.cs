@@ -4,10 +4,17 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+    public Transform Crosshair;
     public Rigidbody2D RigidBody;
     public float bulletInitialSpeed;
+    public bool isTracking;
+    public Transform objectToTrack;
+
+
     void Start()
     {
+        //transform.up = Crosshair.position - transform.position;
+        transform.LookAt(Crosshair);
         RigidBody.AddRelativeForce(new Vector2(0, bulletInitialSpeed));
 
     }
@@ -17,9 +24,23 @@ public class Bullet : MonoBehaviour
     }
     void Update()
     {
+<<<<<<< HEAD
+        if (isTracking == true)
+        {
+            DoTrack();
+        }
+
         if (!GetComponent<Renderer>().isVisible)
         {
             Destroy(gameObject);
         }
+=======
+        
+>>>>>>> parent of 9eb1288 (Further work on ammo counter)
     }
+    private void DoTrack()
+    {
+
+    }
+
 }

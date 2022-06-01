@@ -56,10 +56,11 @@ public class Firearm : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0) && canFire)
         {
-            Instantiate(objToDuplicate, muzzlePoint.position, this.transform.rotation);
+            Instantiate(objToDuplicate, muzzlePoint.position, new Quaternion());
             currentMagAmount -= 1;
         }
     }
+
 
     private bool DoReload()
     {
@@ -73,7 +74,12 @@ public class Firearm : MonoBehaviour
             if (Input.GetMouseButtonDown(0))
             {
                 canFire = true;
+<<<<<<< HEAD
                 reloadTimer = reloadTimerOG;
+                reloadFuncPointer = blank;
+                return false;
+=======
+>>>>>>> parent of 9eb1288 (Further work on ammo counter)
             }
             canFire = false;
             reloadTimer -= Time.deltaTime;

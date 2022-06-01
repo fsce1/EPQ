@@ -47,8 +47,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5da65d30c28f8184aa8da28af59f53e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Crosshair: {fileID: 6670854060763746297, guid: 8dceba2f66279a24e9993ec7e01b6f7d, type: 3}
   RigidBody: {fileID: 3866009398569089725}
   bulletInitialSpeed: 40
+  isTracking: 0
+  objectToTrack: {fileID: 0}
 --- !u!50 &3866009398569089725
 Rigidbody2D:
   serializedVersion: 4

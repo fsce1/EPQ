@@ -54,8 +54,9 @@ MonoBehaviour:
   muzzlePoint: {fileID: 3045534004644087771}
   currentMagAmount: 6
   magCapacity: 6
-  reloadTimer: 0.75
-  reloadTimerOG: 0
+  canTopUp: 0
+  reloadTimer: 1
+  reloadTimerOG: 176
   canFire: 1
 --- !u!50 &8329023081135346124
 Rigidbody2D:
@@ -221,7 +222,6 @@ MonoBehaviour:
   dashSpeedTime: 0.1
   frictionAmount: 15
   frictionAmountDashing: 50
-  frictionAmountOG: 0
 --- !u!50 &1201742487916742589
 Rigidbody2D:
   serializedVersion: 4

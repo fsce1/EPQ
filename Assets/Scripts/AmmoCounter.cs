@@ -8,15 +8,14 @@ public class AmmoCounter : MonoBehaviour
     public TextMesh Text;
     public Transform scalingObject;
     public float maxScale;
-    public float curScaleLerp;
     // Update is called once per frame
-
     void Update()
     {
         Text.text = fireArm.currentMagAmount.ToString();
 
-        curScaleLerp = maxScale * fireArm.reloadTimer;
-        scalingObject.localScale = new Vector2(curScaleLerp, scalingObject.localScale.y);
-
+        if (fireArm.isReloading == true)
+        {
+            scalingObject.transform.localScale = scalingObject.transform.localScale / fireArm.reloadTimer;
+        }
     }
 }
