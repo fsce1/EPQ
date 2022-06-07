@@ -17,54 +17,55 @@ public class Firearm : MonoBehaviour
     public float reloadTimer;
     public float reloadTimerOG;
     public bool canFire = true;
-    Func<bool> reloadFuncPointer;
-    bool blank() => true;
+    public bool isReloading;
+    bool isColliding = false;
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        isColliding = true;
+        if (collision.gameObject.tag == "Obstacle")
+        {
+            canFire = false;
+
+        }
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        isColliding = false;
+        canFire = true;
+    }
 
     void Start()
     {
         reloadTimerOG = reloadTimer;
-        reloadFuncPointer = blank;
     }
     void Update()
     {
         transform.up = Crosshair.position - transform.position;
         RigidBody.MovePosition(Player.transform.position);
 
-        //if (currentMagAmount >= magCapacity)
-        //{
-        //    currentMagAmount = magCapacity;
-        //    IsReloading = false;
-        //}
+        if (currentMagAmount >= magCapacity)
+        {
+            currentMagAmount = magCapacity;
+            isReloading = false;
+        }
 
         if (currentMagAmount < 1)
         {
-            reloadFuncPointer = DoReload;
             canFire = false;
+            isReloading = true;
         }
-        else
+        else if(isColliding == false)
         {
             canFire = true;
         }
 
         if (Input.GetButtonDown("Reload"))
         {
-            //DoReload();
-            reloadFuncPointer = DoReload;
+            isReloading = true;
         }
 
-        reloadFuncPointer();
-
-        if (Input.GetMouseButtonDown(0) && canFire)
-        {
-            Instantiate(objToDuplicate, muzzlePoint.position, new Quaternion());
-            currentMagAmount -= 1;
-        }
-    }
-
-
-    private bool DoReload()
-    {
-        if (currentMagAmount < magCapacity)
+        if (isReloading == true)
         {
             if (reloadTimer < 0)
             {
@@ -73,19 +74,17 @@ public class Firearm : MonoBehaviour
             }
             if (Input.GetMouseButtonDown(0))
             {
+                isReloading = false;
                 canFire = true;
-<<<<<<< HEAD
                 reloadTimer = reloadTimerOG;
-                reloadFuncPointer = blank;
-                return false;
-=======
->>>>>>> parent of 9eb1288 (Further work on ammo counter)
             }
             canFire = false;
             reloadTimer -= Time.deltaTime;
-            return true;
         }
-        reloadFuncPointer = blank;
-        return false;
+        if (Input.GetMouseButtonDown(0) && canFire == true)
+        {
+            Instantiate(objToDuplicate, muzzlePoint.position, this.transform.rotation);
+            currentMagAmount -= 1;
+        }
     }
 }
